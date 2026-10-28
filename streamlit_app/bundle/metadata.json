@@ -1,0 +1,42 @@
+{
+  "family": "ridge",
+  "params": {
+    "alpha": 1.5645599135697303
+  },
+  "features": [
+    "AQI",
+    "PM2_5",
+    "PM10",
+    "NO2",
+    "SO2",
+    "CO8",
+    "O38",
+    "RH",
+    "WS",
+    "SR",
+    "AQI_lag1",
+    "AQI_mean7",
+    "month_sin",
+    "month_cos"
+  ],
+  "run_id": "64cf9da51bcf442a9fec3b2eaff1e58a",
+  "test_rmse": 45.58579385668464,
+  "test_mae": 24.819282209476196,
+  "test_r2": 0.774439065456481,
+  "persistence_test_rmse": 48.33995305266588,
+  "train_rmse_reference": 45.58579385668464,
+  "data": {
+    "rows": 2646,
+    "train_rows": 2117,
+    "test_rows": 529,
+    "stations": 6,
+    "train_end": "2026-03-14",
+    "date_min": "2016-07-07",
+    "date_max": "2026-09-29",
+    "path": "/home/claude/aqi_mlops/sample/daily_aqi_sample.parquet",
+    "files": 1,
+    "hash": "dcf86134491f"
+  },
+  "git_sha": "unknown",
+  "trained_at": "2026-10-28T12:38:35"
+}

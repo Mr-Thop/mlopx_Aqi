@@ -1,0 +1,122 @@
+# MLOps services for the AQI forecast model.
+#   docker compose build
+#   docker compose up -d mlflow                      # tracking server and model registry   http://localhost:5000
+#   docker compose run --rm trainer                  # validate -> tune -> track -> gate -> register
+#   docker compose up -d api dashboard               # model API :8000 (docs at /docs), MLOps dashboard :8502
+#   docker compose run --rm simulate                 # send traffic; add --drift 1.8 to provoke an alert
+#   docker compose run --rm monitor                  # drift and error report (exit code 2 on ALERT)
+#   docker compose run --rm retrain                  # monitor, and retrain when an alert is raised
+#   docker compose run --rm export-bundle           # export champion + tracking snapshot for the Streamlit Cloud app (commit and push it)
+#
+# Training data: the Parquet written by the Spark job (volume aqi-bda_work, path /work/out/daily_aqi).
+# If that volume does not exist yet, create it by running the Spark project first, or comment the volume out:
+# the pipeline then falls back to the small sample that ships in the image.
+name: aqi-mlops
+
+x-app: &app
+  build: .
+  image: aqi-mlops:1.0
+  environment: &env
+    MLFLOW_TRACKING_URI: http://mlflow:5000
+    RUN_DIR: /data
+    DATA_PATH: /work/out/daily_aqi
+    API_URL: http://api:8000
+  volumes:
+    - mlops-data:/data
+    - aqi-bda_work:/work:ro
+
+services:
+  init-volume:                                     # makes the shared data volume writable for the non-root app user
+    image: python:3.12-slim-bookworm
+    user: "0:0"
+    command: ["sh", "-c", "mkdir -p /data && chmod -R a+rwX /data"]
+    volumes:
+      - mlops-data:/data
+
+  mlflow:
+    <<: *app
+    command: ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000",
+              "--backend-store-uri", "sqlite:////data/mlflow.db",
+              "--artifacts-destination", "/data/mlartifacts", "--serve-artifacts",
+              "--allowed-hosts", "*", "--cors-allowed-origins", "*", "--workers", "1"]
+    ports: ["5000:5000"]
+    mem_limit: 1g
+    depends_on:
+      init-volume: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:5000/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  trainer:
+    <<: *app
+    profiles: ["job"]
+    command: ["python", "-m", "mlops.pipeline", "run", "--trials", "8"]
+    depends_on:
+      mlflow: {condition: service_healthy}
+    mem_limit: 2g
+
+  api:
+    <<: *app
+    command: ["uvicorn", "mlops.serve:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8000:8000"]
+    depends_on:
+      mlflow: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    mem_limit: 512m
+
+  export-bundle:                                    # writes the cloud-dashboard bundle into ./streamlit_app/bundle on your machine
+    <<: *app
+    profiles: ["job"]
+    command: ["python", "-m", "mlops.export_bundle", "--out", "/bundle"]
+    volumes:
+      - mlops-data:/data
+      - ./streamlit_app/bundle:/bundle
+    depends_on:
+      mlflow: {condition: service_healthy}
+
+  dashboard:
+    <<: *app
+    command: ["streamlit", "run", "mlops/dashboard.py", "--server.port", "8502", "--server.address", "0.0.0.0", "--browser.gatherUsageStats", "false"]
+    ports: ["8502:8502"]
+    depends_on:
+      mlflow: {condition: service_healthy}
+      api: {condition: service_healthy}
+    mem_limit: 512m
+
+  simulate:
+    <<: *app
+    profiles: ["job"]
+    entrypoint: ["python", "-m", "mlops.simulate", "--api", "http://api:8000"]
+    command: ["--n", "300"]
+    depends_on:
+      api: {condition: service_healthy}
+    mem_limit: 1g
+
+  monitor:
+    <<: *app
+    profiles: ["job"]
+    command: ["python", "-m", "mlops.monitor"]
+    depends_on:
+      mlflow: {condition: service_healthy}
+    mem_limit: 512m
+
+  retrain:
+    <<: *app
+    profiles: ["job"]
+    command: ["python", "-m", "mlops.pipeline", "monitor-and-retrain"]
+    depends_on:
+      mlflow: {condition: service_healthy}
+      api: {condition: service_healthy}
+    mem_limit: 2g
+
+volumes:
+  mlops-data:
+  aqi-bda_work:
+    external: true

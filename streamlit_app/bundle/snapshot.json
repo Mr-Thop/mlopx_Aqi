@@ -1,0 +1,329 @@
+{
+  "exported_at": "2026-10-28T12:38:46",
+  "model_name": "aqi-next-day",
+  "runs": [
+    {
+      "run_name": "training-pipeline",
+      "stage": "pipeline",
+      "family": null,
+      "start_time": "2026-10-28 07:08:27",
+      "val_rmse": null,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": "True",
+      "params": {
+        "trials_per_family": "3",
+        "val_fraction": "0.2",
+        "data_stations": "6",
+        "data_rows": "2646",
+        "data_path": "/home/claude/aqi_mlops/sample/daily_aqi_sample.parquet",
+        "data_train_rows": "2117",
+        "test_fraction": "0.2",
+        "data_test_rows": "529",
+        "data_date_min": "2016-07-07",
+        "data_train_end": "2026-03-14",
+        "data_files": "1",
+        "data_date_max": "2026-09-29",
+        "data_hash": "dcf86134491f"
+      }
+    },
+    {
+      "run_name": "ridge",
+      "stage": "family",
+      "family": "ridge",
+      "start_time": "2026-10-28 07:08:27",
+      "val_rmse": 34.9137,
+      "test_rmse": 45.5858,
+      "test_r2": 0.7744,
+      "promoted": null,
+      "params": {
+        "alpha": "1.5645599135697303"
+      }
+    },
+    {
+      "run_name": "ridge-trial-0",
+      "stage": "tuning",
+      "family": "ridge",
+      "start_time": "2026-10-28 07:08:27",
+      "val_rmse": 35.2244,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "alpha": "74.09352260173368"
+      }
+    },
+    {
+      "run_name": "ridge-trial-1",
+      "stage": "tuning",
+      "family": "ridge",
+      "start_time": "2026-10-28 07:08:28",
+      "val_rmse": 34.9137,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "alpha": "1.5645599135697303"
+      }
+    },
+    {
+      "run_name": "ridge-trial-2",
+      "stage": "tuning",
+      "family": "ridge",
+      "start_time": "2026-10-28 07:08:28",
+      "val_rmse": 35.8429,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "alpha": "196.33132590332258"
+      }
+    },
+    {
+      "run_name": "random_forest",
+      "stage": "family",
+      "family": "random_forest",
+      "start_time": "2026-10-28 07:08:28",
+      "val_rmse": 41.7201,
+      "test_rmse": 46.905,
+      "test_r2": 0.7612,
+      "promoted": null,
+      "params": {
+        "min_samples_leaf": "10",
+        "n_estimators": "300",
+        "max_depth": "20"
+      }
+    },
+    {
+      "run_name": "random_forest-trial-0",
+      "stage": "tuning",
+      "family": "random_forest",
+      "start_time": "2026-10-28 07:08:28",
+      "val_rmse": 48.6016,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "min_samples_leaf": "2",
+        "n_estimators": "100",
+        "max_depth": "14"
+      }
+    },
+    {
+      "run_name": "random_forest-trial-1",
+      "stage": "tuning",
+      "family": "random_forest",
+      "start_time": "2026-10-28 07:08:28",
+      "val_rmse": 43.0647,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "min_samples_leaf": "20",
+        "n_estimators": "100",
+        "max_depth": "14"
+      }
+    },
+    {
+      "run_name": "random_forest-trial-2",
+      "stage": "tuning",
+      "family": "random_forest",
+      "start_time": "2026-10-28 07:08:29",
+      "val_rmse": 41.7201,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "min_samples_leaf": "10",
+        "n_estimators": "300",
+        "max_depth": "20"
+      }
+    },
+    {
+      "run_name": "hist_gradient_boosting",
+      "stage": "family",
+      "family": "hist_gradient_boosting",
+      "start_time": "2026-10-28 07:08:32",
+      "val_rmse": 43.8443,
+      "test_rmse": 49.5603,
+      "test_r2": 0.7334,
+      "promoted": null,
+      "params": {
+        "max_depth": "8",
+        "max_iter": "400",
+        "learning_rate": "0.015565764265126965",
+        "l2_regularization": "0.03042230366019293"
+      }
+    },
+    {
+      "run_name": "hist_gradient_boosting-trial-0",
+      "stage": "tuning",
+      "family": "hist_gradient_boosting",
+      "start_time": "2026-10-28 07:08:32",
+      "val_rmse": 43.8443,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "max_depth": "8",
+        "max_iter": "400",
+        "learning_rate": "0.015565764265126965",
+        "l2_regularization": "0.03042230366019293"
+      }
+    },
+    {
+      "run_name": "hist_gradient_boosting-trial-1",
+      "stage": "tuning",
+      "family": "hist_gradient_boosting",
+      "start_time": "2026-10-28 07:08:33",
+      "val_rmse": 52.2424,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "max_depth": "8",
+        "max_iter": "200",
+        "learning_rate": "0.24555426586822138",
+        "l2_regularization": "1.9545485073586322"
+      }
+    },
+    {
+      "run_name": "hist_gradient_boosting-trial-2",
+      "stage": "tuning",
+      "family": "hist_gradient_boosting",
+      "start_time": "2026-10-28 07:08:34",
+      "val_rmse": 44.5319,
+      "test_rmse": null,
+      "test_r2": null,
+      "promoted": null,
+      "params": {
+        "max_depth": "5",
+        "max_iter": "200",
+        "learning_rate": "0.04625101822337395",
+        "l2_regularization": "0.1653252347575385"
+      }
+    }
+  ],
+  "registry": [
+    {
+      "version": 1,
+      "aliases": [
+        "champion"
+      ],
+      "tags": {
+        "test_rmse": "45.5858",
+        "family": "ridge",
+        "git_sha": "unknown",
+        "persistence_test_rmse": "48.3400",
+        "trained_at": "2026-10-28T12:38:35",
+        "gate": "promoted"
+      },
+      "created": "2026-10-28 12:38"
+    }
+  ],
+  "note": null,
+  "monitor_report": null,
+  "monitor_history": [],
+  "last_summary": {
+    "selected": "ridge",
+    "test_rmse": 45.58579385668464,
+    "persistence_rmse": 48.33995305266588,
+    "improvement_pct": 5.697480080257034,
+    "all": {
+      "ridge": {
+        "params": {
+          "alpha": 1.5645599135697303
+        },
+        "val_rmse": 34.913670546596144,
+        "test_rmse": 45.58579385668464,
+        "test_mae": 24.819282209476196,
+        "test_r2": 0.774439065456481,
+        "run_id": "1ba7e644a36547e39b6764a3a1c4fa91"
+      },
+      "random_forest": {
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 20,
+          "min_samples_leaf": 10
+        },
+        "val_rmse": 41.720132379863955,
+        "test_rmse": 46.90495156469739,
+        "test_mae": 25.33288787932587,
+        "test_r2": 0.7611956549880083,
+        "run_id": "22a3ad2671364a22ba0857338d32fe23"
+      },
+      "hist_gradient_boosting": {
+        "params": {
+          "learning_rate": 0.015565764265126965,
+          "max_iter": 400,
+          "max_depth": 8,
+          "l2_regularization": 0.03042230366019293
+        },
+        "val_rmse": 43.84427491953571,
+        "test_rmse": 49.56027281412605,
+        "test_mae": 27.180716160206256,
+        "test_r2": 0.7333925889936357,
+        "run_id": "4a9fe92391e942a593a34603b267bd31"
+      }
+    },
+    "decision": {
+      "promoted": true,
+      "version": 1,
+      "reason": "promoted: first champion, RMSE 45.59 beats persistence 48.34"
+    },
+    "data": {
+      "rows": 2646,
+      "train_rows": 2117,
+      "test_rows": 529,
+      "stations": 6,
+      "train_end": "2026-03-14",
+      "date_min": "2016-07-07",
+      "date_max": "2026-09-29",
+      "path": "/home/claude/aqi_mlops/sample/daily_aqi_sample.parquet",
+      "files": 1,
+      "hash": "dcf86134491f"
+    },
+    "run_id": "64cf9da51bcf442a9fec3b2eaff1e58a",
+    "seconds": 20.5
+  },
+  "pipeline_runs": [
+    {
+      "file": "20261028-123844.json",
+      "status": "success",
+      "started": "2026-10-28T12:38:23",
+      "result": {
+        "selected": "ridge",
+        "test_rmse": 45.58579385668464,
+        "persistence_rmse": 48.33995305266588,
+        "improvement_pct": 5.697480080257034,
+        "decision": {
+          "promoted": true,
+          "version": 1,
+          "reason": "promoted: first champion, RMSE 45.59 beats persistence 48.34"
+        }
+      },
+      "stages": [
+        {
+          "stage": "check-tracking-server",
+          "status": "ok",
+          "seconds": 0.0
+        },
+        {
+          "stage": "validate-data",
+          "status": "ok",
+          "seconds": 0.44
+        },
+        {
+          "stage": "train-tune-register",
+          "status": "ok",
+          "seconds": 20.48
+        },
+        {
+          "stage": "smoke-test-model",
+          "status": "ok",
+          "seconds": 0.0
+        }
+      ]
+    }
+  ]
+}
