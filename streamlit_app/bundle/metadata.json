@@ -1,7 +1,10 @@
 {
-  "family": "ridge",
+  "family": "hist_gradient_boosting",
   "params": {
-    "alpha": 1.5645599135697303
+    "learning_rate": 0.030813287578910782,
+    "max_iter": 400,
+    "max_depth": 5,
+    "l2_regularization": 0.07554804756926672
   },
   "features": [
     "AQI",
@@ -19,24 +22,24 @@
     "month_sin",
     "month_cos"
   ],
-  "run_id": "64cf9da51bcf442a9fec3b2eaff1e58a",
-  "test_rmse": 45.58579385668464,
-  "test_mae": 24.819282209476196,
-  "test_r2": 0.774439065456481,
-  "persistence_test_rmse": 48.33995305266588,
-  "train_rmse_reference": 45.58579385668464,
+  "run_id": "a24098aa62ec42098f96dde03d595da0",
+  "test_rmse": 29.468855125316093,
+  "test_mae": 17.280412262022697,
+  "test_r2": 0.7928984652677148,
+  "persistence_test_rmse": 32.2405904454019,
+  "train_rmse_reference": 29.468855125316093,
   "data": {
-    "rows": 2646,
-    "train_rows": 2117,
-    "test_rows": 529,
-    "stations": 6,
-    "train_end": "2026-03-14",
-    "date_min": "2016-07-07",
+    "rows": 174926,
+    "train_rows": 139958,
+    "test_rows": 34968,
+    "stations": 96,
+    "train_end": "2025-03-01",
+    "date_min": "2015-04-08",
     "date_max": "2026-09-29",
-    "path": "/home/claude/aqi_mlops/sample/daily_aqi_sample.parquet",
-    "files": 1,
-    "hash": "dcf86134491f"
+    "path": "/work/out/daily_aqi",
+    "files": 95,
+    "hash": "4e9881270d09"
   },
   "git_sha": "unknown",
-  "trained_at": "2026-10-28T12:38:35"
+  "trained_at": "2026-10-28T03:00:48"
 }
