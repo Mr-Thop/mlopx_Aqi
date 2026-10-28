@@ -60,7 +60,7 @@ def export(out: Path = DEFAULT_OUT, model_dir: Path | None = None) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     for f in model_dir.iterdir():
         if f.is_file():
-            shutil.copy(f, out / f.name)
+            shutil.copyfile(f, out / f.name)           # no chmod: bind mounts on Windows reject it
     snap = {"exported_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "model_name": C.MODEL_NAME, **tracking_snapshot()}
     rep = C.MONITOR_DIR / "report.json"
     snap["monitor_report"] = json.loads(rep.read_text()) if rep.exists() else None
