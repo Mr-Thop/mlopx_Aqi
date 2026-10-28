@@ -72,8 +72,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/aqi-mlops:latest
-            ghcr.io/${{ github.repository_owner }}/aqi-mlops:${{ github.sha }}
+            ghcr.io/mr-thop/aqi-mlops:latest
+            ghcr.io/mr-thop/aqi-mlops:${{ github.sha }}
 
   deploy:
     # Streamlit Community Cloud redeploys the app whenever the `deploy` branch moves.
